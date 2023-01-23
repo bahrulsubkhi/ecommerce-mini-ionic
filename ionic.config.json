@@ -1,0 +1,7 @@
+{
+  "name": "limecommerce",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

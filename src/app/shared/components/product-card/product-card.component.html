@@ -1,0 +1,131 @@
+<div *ngIf="cardType === cardTypeValue.grid" class="layout-grid">
+  <ng-container *ngIf="!isLoading">
+    <div class="product" [ngClass]="{ activated: false}" [ngStyle]="{ 'min-height': minHeight, width: width }">
+      <div class="header">
+        <img-cache [src]="product.thumbnail" class="img"></img-cache>
+        <ion-button fill="clear" *ngIf="product.id && hidePriceInfo !== true" id="price-info-{{product.id}}">
+          <ion-icon name="heart"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="content">
+        <span class="title">
+          {{ product.title }}
+        </span>
+        <div class="unit-content">
+          <div class="unit">{{ product.category }}</div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="section-price">
+          <div class="discount-tag" *ngIf="product.discountPercentage>0">{{product.discountPercentage}}%</div>
+          <ng-container *ngIf="product.discountPercentage>0">
+            <span class="label through">{{price}}</span>
+          </ng-container>
+          <span class="price">{{ discount }}</span>
+          <span class="label">
+            <ion-icon name="star"></ion-icon>
+            {{product.rating}} | stok : {{product.stock}}
+          </span>
+        </div>
+        <div class="section-button">
+          <ion-button class="order" fill="outline">
+            + Keranjang
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <div [ngStyle]="{ 'min-height': minHeight, width: width }" class="product">
+      <div class="header">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <div class="content">
+        <span class="title">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </span>
+        <div class="unit-content">
+          <ion-skeleton-text animated [style.width]="'30px'"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="footer">
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<!-- end product type grid -->
+
+<div *ngIf="cardType === cardTypeValue.list" class="layout-list">
+  <ng-container *ngIf="!isLoading">
+    <div class="product" [ngClass]="{ activated: false}">
+      <div class="content">
+        <div class="discount-tag" *ngIf="product.discountPercentage>0">{{product.discountPercentage}}%</div>
+        <div class="image-content">
+          <img [defaultImage]="'assets/icon/favicon.png'" [lazyLoad]="product.thumbnail" alt="logo">
+        </div>
+        <div class="info-content">
+          <div class="product-card-flagicon-wrapper list">
+            <ion-img *ngIf="product.pin === 1" class="crown-icon" src="./assets/icons/crown-icon.svg"></ion-img>
+          </div>
+          <span class="title">{{ product.title }}</span>
+          <div class="unit-content">
+            <div class="unit">{{ product.category }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <ion-button fill="outline" class="price-info" *ngIf="product.id" id="price-info-{{product.id}}">
+          <ion-icon name="heart"></ion-icon>
+          &nbsp;&nbsp;Favorit
+        </ion-button>
+        <div class="price-content">
+          <ng-container *ngIf="product.discountPercentage>0">
+            <span class="label through">{{price}}</span>
+          </ng-container>
+          <span class="nominal">{{ discount }}</span>
+          <span class="label">
+            <ion-icon name="star"></ion-icon>
+            {{product.rating}} | stok : {{product.stock}}
+          </span>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="line"></div>
+        <ion-button fill="outline" class="order-button" shape="round" expand="block">
+          + Keranjang
+        </ion-button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <div class="product">
+      <div class="content">
+        <div class="image-content">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </div>
+        <div class="info-content">
+          <span class="title">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </span>
+          <div class="unit-content">
+            <ion-skeleton-text animated [style.width]="'30px'"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="line"></div>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <div class="price-content">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

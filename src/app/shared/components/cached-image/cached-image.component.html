@@ -1,0 +1,11 @@
+<img *ngIf="lazyLoading" [defaultImage]="'assets/icon/favicon.png'" [lazyLoad]="_src" [ngClass]="fitting">
+<img *ngIf="!lazyLoading" [src]="_src" [ngClass]="fitting">
+
+<ng-template #loading>
+  <div class="ion-text-center" *ngIf="spinner">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+  </div>
+  <div *ngIf="!spinner">
+    <ion-skeleton-text animated style="width: 54px; height: 54px; margin: auto;"></ion-skeleton-text>
+  </div>
+</ng-template>

@@ -1,0 +1,78 @@
+<ion-header class="ion-no-border" color="primary">
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Mau cari produk apa?"
+      id="product-gallery-open-search"
+      [searchIcon]="'search-sharp'"
+      clearInput="true"
+      slot="start">  
+    </ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button class="cart-button" id="product-gallery-cart">
+        <ion-badge mode="ios" color="danger">2</ion-badge>
+        <ion-icon slot="icon-only" src="assets/icon/cart.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="products$ | async as product; else loadingState">
+    <ng-container *ngIf="product.length>0;else emptyState">
+      <div class="product-gallery">
+        <div class="header">
+          <span> {{total}} Produk ditemukan</span>
+          <ion-button fill="clear" [class]="!layoutGrid ? 'disabled' : ''" id="product-gallery-layout" (click)="layoutGrid = !layoutGrid">
+            <ion-icon name="grid-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div [ngClass]="{'product-layout grid': layoutGrid, 'layout-list': !layoutGrid}">
+          <app-product-card
+            *ngFor="let p of product"
+            [product]="p"
+            [cardType]="layoutGrid ? 'grid':'list'"
+            [isLoading]="false"
+            (showPriceInfo)="priceInfo(p)"
+            id="product-gallery-card-product"
+            (click)="openProductDetail(p)"
+          ></app-product-card>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ion-infinite-scroll [disabled]="isScrollEnd" (ionInfinite)="loadMoreProducts($event)" threshold="40%">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Tunggu sebentar..."
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ng-template #emptyState>
+    <div class="product-gallery">
+      <div class="empty-state">
+        <div class="empty-state-content">
+          <ion-text class="title">Barang sedang kosong!</ion-text>
+          <ion-text class="description">
+            Oops! Barang pada sedang kosong. Coba cari dengan kata kunci atau kategori
+            lain, yuk.
+          </ion-text>
+        </div>
+      </div>
+    </div>
+</ng-template>
+
+<ng-template #loadingState>
+  <div class="product-gallery">
+    <div class="header">
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </div>
+    <div [ngClass]="{'product-layout grid': layoutGrid, 'layout-list': !layoutGrid}">
+      <app-product-card 
+        *ngFor="let p of [1, 2, 3, 4, 5, 6]"
+        [cardType]="layoutGrid ? 'grid':'list'"
+        [isLoading]="true">
+      </app-product-card>
+    </div>
+  </div>
+</ng-template>
